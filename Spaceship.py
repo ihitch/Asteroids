@@ -10,7 +10,7 @@ ACCELERATION = 30
 MAX_SPEED = 250
 class Spaceship(SpaceObject):
     def __init__(self, batch,g_objects = None):
-        super(Spaceship, self).__init__(game_batch=batch, game_objects=g_objects,x = WINDOW_HEIGHT / 2,y = WINDOW_WIDTH / 2, x_speed = 0, y_speed = 0, rotation = 0, image = 'playerShip1_orange.png')
+        super(Spaceship, self).__init__(game_batch=batch, game_objects=g_objects,x = WINDOW_HEIGHT / 2,y = WINDOW_WIDTH / 2, x_speed = 0, y_speed = 0, rotation = 0, image = 'Resources/playerShip1_orange.png')
         self.reload = 0.5
         self.key_handler = key.KeyStateHandler()
     def update(self, dt):

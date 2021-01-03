@@ -6,7 +6,7 @@ from pyglet import clock
 SHOOTING_SPEED = 300
 class Laser(SpaceObject):
     def __init__(self, game_batch, objects,ship_x, ship_y, ship_rotation, ship_x_speed, ship_y_speed):
-        super(Laser, self).__init__(game_batch=game_batch,game_objects = objects,x=ship_x,y=ship_y, x_speed = ship_x_speed, y_speed = ship_y_speed, rotation = ship_rotation, image = 'laserRed12.png')
+        super(Laser, self).__init__(game_batch=game_batch,game_objects = objects,x=ship_x,y=ship_y, x_speed = ship_x_speed, y_speed = ship_y_speed, rotation = ship_rotation, image = 'Resources/laserRed12.png')
         clock.schedule_once(self.die, 1.8)
     
     def update(self,dt):
