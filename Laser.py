@@ -17,6 +17,6 @@ class Laser(SpaceObject):
         self.sprite.y = self.y
 
         for obj in self.objects:
-            if str(type(obj).__name__) == 'Asteroid' and self.overlaps(self,obj):
+            if str(type(obj).__name__) == 'Asteroid' and self.collides_with(obj):
                 obj.die()
                 self.die()

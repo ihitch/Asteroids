@@ -6,12 +6,16 @@ from pyglet import gl
 from Laser import Laser
 from Asteroid import Asteroid
 import random
+import time
 
+#game_over = False
 objects =[]
 game_window = pyglet.window.Window(WINDOW_HEIGHT, WINDOW_WIDTH)
 batch = pyglet.graphics.Batch()
+#GO_batch = pyglet.graphics.Batch()
 player = Spaceship(batch, objects)
 objects.append(player)
+
 
 def load_asteroids(n):
     for i in range(0,n):
@@ -39,18 +43,35 @@ def load_asteroids(n):
 load_asteroids(5)
 game_window.push_handlers(player.key_handler)
 
+def draw_text(text, x, y, pos_x):
+    label = pyglet.text.Label(
+        text,
+        font_name='League Gothic',
+        font_size=36,
+        x=x, y=y, anchor_x=pos_x)
+    label.draw()
+
 @game_window.event
 def on_draw():
     game_window.clear()
+    #if game_over == False:
     for x_offset in (-game_window.width, 0, game_window.width):
         for y_offset in (-game_window.height, 0, game_window.height):
             gl.glPushMatrix()
             gl.glTranslatef(x_offset, y_offset, 0)
             batch.draw()
             gl.glPopMatrix()
+    """        
+    for obj in objects:
+        obj.draw_circle(obj.x,obj.y,obj.radius)
+    else:
+        print('lol')
+        draw_text('GAME OVER',WINDOW_WIDTH/2,WINDOW_HEIGHT/2,'left')
+        GO_batch.draw()"""
 
         
 def update(dt):
+
     if len(objects) == 1 and str(type(objects[0]).__name__)=='Spaceship':
         load_asteroids(5)
     for obj in objects:
@@ -60,7 +81,11 @@ def update(dt):
             obj.sprite.delete()
 
             if (str(type(obj).__name__)) == 'Spaceship':
+                #game_over = True
+                objects.clear()
+                time.sleep(3)
                 pyglet.app.exit()
+                
                 
 
 if __name__ == "__main__":

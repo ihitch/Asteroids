@@ -1,5 +1,7 @@
 import pyglet
 from Settings import WINDOW_HEIGHT, WINDOW_WIDTH
+import math
+from pyglet import gl
 
 class SpaceObject:
     def __init__(self, game_batch = None, game_objects=None, x=0, y=0, x_speed=0, y_speed=0, rotation=0, image=''):
@@ -20,18 +22,29 @@ class SpaceObject:
     def die(self, dt=0):
         self.isdead = True
 
-    def distance(self,a, b, wrap_size):
-        """Distance in one direction (x or y)"""
-        result = abs(a - b)
-        if result > wrap_size / 2:
-            result = wrap_size - result
-        return result
+    def distance(self,point_1=(0, 0), point_2=(0, 0)):
+        return math.sqrt(
+            (point_1[0] - point_2[0]) ** 2 +
+            (point_1[1] - point_2[1]) ** 2)
 
-    def overlaps(self,a, b):
-        """Returns true iff two space objects overlap"""
-        distance_squared = (self.distance(a.x, b.x, WINDOW_WIDTH) ** 2 +
-                            self.distance(a.y, b.y, WINDOW_HEIGHT) ** 2)
-        max_distance_squared = (a.radius + b.radius) ** 2
-        return distance_squared < max_distance_squared
+    def collides_with(self, other):
+        collision_distance = (self.radius) + (other.radius)
+        actual_distance = self.distance((self.x,self.y), (other.x,other.y))
+
+        return actual_distance <= collision_distance
+
+    def draw_circle(self,x, y, radius):
+        iterations = 20
+        s = math.sin(2*math.pi / iterations)
+        c = math.cos(2*math.pi / iterations)
+
+        dx, dy = radius, 0
+
+        gl.glBegin(gl.GL_LINE_STRIP)
+        for i in range(iterations+1):
+            gl.glVertex2f(x+dx, y+dy)
+            dx, dy = (dx*c - dy*s), (dy*c + dx*s)
+        gl.glEnd()
+
 
     

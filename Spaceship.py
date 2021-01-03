@@ -45,9 +45,9 @@ class Spaceship(SpaceObject):
         self.sprite.rotation = 90 - math.degrees(self.rotation)
         self.sprite.x = self.x
         self.sprite.y = self.y
-
+        
         for obj in self.objects:
-            if str(type(obj).__name__) == 'Asteroid' and self.overlaps(self,obj):
+            if str(type(obj).__name__) == 'Asteroid' and self.collides_with(obj):
                 self.die()
 
     def fire(self):
